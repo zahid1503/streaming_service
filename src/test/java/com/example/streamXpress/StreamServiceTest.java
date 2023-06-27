@@ -37,6 +37,8 @@ public class StreamServiceTest {
         @Test
         @DisplayName("Test updatePackage - Successful update")
         public void updatePackageTest(){
+
+            // given
             Long channelId = 9L;
             Long id =8L;
             Plan duration = Plan.MONTHLY;
@@ -45,12 +47,14 @@ public class StreamServiceTest {
 
             Channel channel = new Channel();
 
+            //when
             Mockito.when(subscriptionRepository.findById(id)).thenReturn(Optional.of(subscription));
 
             Mockito.when(channelRepository.findById(channelId)).thenReturn(Optional.of(channel));
 
             String result = streamService.updatePackage(channelId,duration,id);
 
+            // assert
             Assertions.assertEquals("congrats! successfully added a channel to your package" , result);
 
             Mockito.verify(subscriptionRepository).save(subscription);
@@ -60,16 +64,19 @@ public class StreamServiceTest {
     @DisplayName("Test subscribe to package -subscribe successful ")
     public void subscribeToPackageTest(){
 
+            // given
             SubscriptionRequestDto request = new SubscriptionRequestDto();
 
             PackageEntity selectedPackage = new PackageEntity();
 
             Subscription subscription = new Subscription();
 
+            // when
             Mockito.when(packageRepository.findById(request.getPackId())).thenReturn(Optional.of(selectedPackage));
 
             String result = streamService.subscribeToPackage(request);
 
+            // assert
             Assertions.assertEquals("congrats! successfully subscribed a package",result);
 
             Mockito.verify(subscriptionRepository).save(Mockito.any(Subscription.class));

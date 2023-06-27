@@ -27,19 +27,21 @@ public class StreamControllerTest {
     private StreamController streamController;
 
     @Test
-    @DisplayName("execute method of createPackage should return error if request is not found")
+    @DisplayName("execute method of createPackage")
     public void testCreatePackage() {
-
+        // given
         PackageRequestDTO request = new PackageRequestDTO();
 
         PackageEntity savedEntity = new PackageEntity();
 
         PackageResponseDTO expectedResponse = new PackageResponseDTO();
 
+        //when
         Mockito.when(packageRepository.save(Mockito.any(PackageEntity.class))).thenReturn(savedEntity);
 
         PackageResponseDTO response = streamService.addPackage(request);
 
+        // assert
         Assertions.assertEquals(expectedResponse, response);
 
         Mockito.verify(packageRepository).save(Mockito.any(PackageEntity.class));

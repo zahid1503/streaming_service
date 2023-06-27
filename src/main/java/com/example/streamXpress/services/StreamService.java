@@ -27,7 +27,6 @@ public class StreamService implements IStreamService{
 
     @Autowired
     private ChannelRepository channelRepository;
-
     @Autowired
     private SubscriptionRepository subscriptionRepository;
     @Autowired
@@ -54,7 +53,9 @@ public class StreamService implements IStreamService{
             subscription.setPack(selectedPackage);
             subscription.setDuration(request.getDuration());
             subscriptionRepository.save(subscription);
+
             log.debug("subscribing a package ends");
+
             return "congrats! successfully subscribed a package";
 
         }catch (Exception ex){
@@ -86,7 +87,9 @@ public class StreamService implements IStreamService{
             subscription.setAddOnChannel(channel);
 
             subscriptionRepository.save(subscription);
-            log.debug("update subscription ends");
+
+            log.debug("update a subscription ends");
+
             return "congrats! successfully added a channel to your package";
         }catch (Exception ex){
             if(Constants.SUBSCRIPTION_ID_NOT_FOUND.equals(ex.getMessage())){
@@ -136,7 +139,9 @@ public class StreamService implements IStreamService{
             PackageEntity defaultPackage = modelMapper.map(request, PackageEntity.class);
             PackageEntity savedEntity = packageRepository.save(defaultPackage);
             PackageResponseDTO response = modelMapper.map(savedEntity, PackageResponseDTO.class);
+
             log.debug("adding package ends");
+
             return response;
         }catch (Exception ex){
             if(Constants.CHANNEL_NOT_FOUND.equals(ex.getMessage())){
